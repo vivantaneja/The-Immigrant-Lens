@@ -15,45 +15,47 @@ const levels = [
 
 const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({ currentLevel, progress }) => {
   return (
-    <div className="fixed top-8 right-8 z-50">
-      <div className="bg-card/80 backdrop-blur-md rounded-lg p-4 border border-border">
-        <p className="font-mono text-xs text-muted-foreground mb-3">PROGRESS</p>
+    <div className="fixed top-4 right-4 md:top-8 md:right-8 z-50">
+      <div className="bg-card/60 backdrop-blur-sm rounded-lg p-2 md:p-3 border border-border/50 shadow-lg">
+        {/* Compact view - only show numbers on mobile */}
+        <div className="hidden md:block">
+          <p className="font-mono text-[10px] text-muted-foreground mb-2">PROGRESS</p>
+        </div>
         
-        <div className="space-y-2">
+        <div className="flex md:flex-col gap-1 md:gap-1.5">
           {levels.map((level) => {
             const isActive = level.id === currentLevel;
             const isCompleted = level.id < currentLevel;
             const levelProgress = isActive ? progress : isCompleted ? 1 : 0;
             
             return (
-              <div key={level.id} className="flex items-center gap-3">
-                {/* Level Number */}
+              <div key={level.id} className="flex items-center gap-1.5 md:gap-2">
+                {/* Level Number - smaller on mobile */}
                 <div 
-                  className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-mono transition-all duration-300 ${
+                  className={`w-5 h-5 md:w-6 md:h-6 rounded-full flex items-center justify-center text-[10px] md:text-xs font-mono transition-all duration-300 ${
                     isCompleted 
-                      ? 'bg-primary text-primary-foreground' 
+                      ? 'bg-primary/80 text-primary-foreground' 
                       : isActive 
-                        ? 'bg-primary/20 text-primary neon-border-blue' 
-                        : 'bg-secondary text-muted-foreground'
+                        ? 'bg-primary/20 text-primary' 
+                        : 'bg-secondary/50 text-muted-foreground'
                   }`}
                 >
                   {level.id}
                 </div>
                 
-                {/* Progress Bar */}
-                <div className="w-24 h-1.5 bg-secondary rounded-full overflow-hidden">
+                {/* Progress Bar - smaller and more subtle */}
+                <div className="w-12 md:w-20 h-1 md:h-1.5 bg-secondary/50 rounded-full overflow-hidden">
                   <div 
-                    className="h-full bg-primary rounded-full transition-all duration-300"
+                    className="h-full bg-primary/70 rounded-full transition-all duration-300"
                     style={{ 
                       width: `${levelProgress * 100}%`,
-                      boxShadow: levelProgress > 0 ? '0 0 8px hsl(190 100% 50% / 0.5)' : 'none',
                     }}
                   />
                 </div>
                 
-                {/* Level Name (only show for active) */}
+                {/* Level Name - only show on desktop and when active */}
                 {isActive && (
-                  <span className="text-xs text-primary font-mono whitespace-nowrap">
+                  <span className="hidden lg:block text-[10px] text-primary/80 font-mono whitespace-nowrap">
                     {level.name}
                   </span>
                 )}

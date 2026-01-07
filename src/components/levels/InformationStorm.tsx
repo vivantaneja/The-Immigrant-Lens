@@ -102,42 +102,42 @@ const InformationStorm: React.FC<InformationStormProps> = ({ progress, surveyDat
       
       {/* Survey Stat Card */}
       <div 
-        className="absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 z-10"
+        className="absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 z-10 w-full px-4"
         style={{ 
           opacity: stormOpacity > 0.5 ? 1 : stormOpacity * 2,
           transform: `translate(-50%, -50%) scale(${0.8 + stormOpacity * 0.2})`,
         }}
       >
-        <div className="bg-card/90 backdrop-blur-sm border border-border rounded-lg p-6 max-w-md neon-border-red">
-          <p className="text-sm text-muted-foreground mb-2 font-mono">SURVEY FINDING</p>
-          <p className="text-2xl font-display text-foreground">
-            <span className="text-destructive text-glow-red text-4xl font-bold">
-              {surveyData.socialMediaReliance}%
+        <div className="bg-card/90 backdrop-blur-sm border border-border rounded-lg p-4 md:p-6 max-w-md mx-auto neon-border-red">
+          <p className="text-xs md:text-sm text-muted-foreground mb-2 font-mono">SURVEY FINDING</p>
+          <p className="text-xl md:text-2xl font-display text-foreground">
+            <span className="text-destructive text-glow-red text-2xl md:text-4xl font-bold">
+              {surveyData.knowledgeGap}%
             </span>
           </p>
-          <p className="text-lg text-foreground mt-2">
-            of people rely on social media for migration news
+          <p className="text-sm md:text-lg text-foreground mt-2">
+            of people admit they don't fully understand migration policies
           </p>
         </div>
       </div>
       
       {/* Beacon of Truth */}
       <div 
-        className="absolute right-[15%] top-1/2 -translate-y-1/2"
+        className="absolute right-[5%] md:right-[15%] top-1/2 -translate-y-1/2 scale-75 md:scale-100"
         style={{ 
           opacity: beaconOpacity,
-          transform: `translateY(-50%) scale(${beaconScale})`,
+          transform: `translateY(-50%) scale(${beaconScale * 0.75})`,
         }}
       >
         <div className="relative">
           {/* Beacon Glow */}
-          <div className="absolute inset-0 w-32 h-32 rounded-full bg-primary/20 animate-beacon blur-xl" />
+          <div className="absolute inset-0 w-24 md:w-32 h-24 md:h-32 rounded-full bg-primary/20 animate-beacon blur-xl" />
           
           {/* Beacon Core */}
-          <div className="relative w-32 h-32 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center animate-beacon neon-border-blue">
+          <div className="relative w-24 md:w-32 h-24 md:h-32 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center animate-beacon neon-border-blue">
             <div className="text-center">
-              <div className="font-display text-primary-foreground text-sm font-bold">TRUTH</div>
-              <div className="font-display text-primary-foreground text-xs">BEACON</div>
+              <div className="font-display text-primary-foreground text-xs md:text-sm font-bold">TRUTH</div>
+              <div className="font-display text-primary-foreground text-[10px] md:text-xs">BEACON</div>
             </div>
           </div>
           
@@ -145,7 +145,7 @@ const InformationStorm: React.FC<InformationStormProps> = ({ progress, surveyDat
           {[...Array(8)].map((_, i) => (
             <div
               key={i}
-              className="absolute top-1/2 left-1/2 w-1 h-24 bg-gradient-to-t from-primary/40 to-transparent"
+              className="absolute top-1/2 left-1/2 w-1 h-16 md:h-24 bg-gradient-to-t from-primary/40 to-transparent"
               style={{
                 transform: `translate(-50%, -100%) rotate(${i * 45}deg)`,
                 transformOrigin: 'bottom center',
@@ -157,10 +157,10 @@ const InformationStorm: React.FC<InformationStormProps> = ({ progress, surveyDat
       </div>
       
       {/* Level Label */}
-      <div className="absolute bottom-8 left-8 z-20">
+      <div className="absolute bottom-4 md:bottom-8 left-4 md:left-8 z-20 max-w-[calc(100%-2rem)] md:max-w-md">
         <p className="font-mono text-xs text-muted-foreground mb-1">LEVEL 01</p>
-        <h2 className="font-display text-2xl text-foreground text-glow-blue">THE INFORMATION STORM</h2>
-        <p className="text-sm text-muted-foreground mt-2 max-w-md">
+        <h2 className="font-display text-lg md:text-2xl text-foreground text-glow-blue">THE INFORMATION STORM</h2>
+        <p className="text-xs md:text-sm text-muted-foreground mt-1 md:mt-2">
           Navigate through the chaos of misinformation to find the beacon of truth
         </p>
       </div>
