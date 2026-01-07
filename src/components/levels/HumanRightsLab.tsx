@@ -63,24 +63,24 @@ const HumanRightsLab: React.FC<HumanRightsLabProps> = ({ progress }) => {
       
       {/* Article 14 Display */}
       <div 
-        className="absolute top-12 left-1/2 -translate-x-1/2 text-center max-w-3xl px-8"
+        className="absolute top-8 md:top-12 left-1/2 -translate-x-1/2 text-center max-w-3xl px-4 md:px-8 z-30"
         style={{ 
           opacity: Math.min(1, progress * 2),
           transform: `translateX(-50%) translateY(${(1 - Math.min(1, progress * 2)) * 20}px)`,
         }}
       >
-        <div className="flex items-center justify-center gap-3 mb-4">
-          <Scale size={28} className="text-primary" />
-          <p className="font-mono text-sm text-primary">UNIVERSAL DECLARATION OF HUMAN RIGHTS</p>
-          <BookOpen size={28} className="text-primary" />
+        <div className="flex items-center justify-center gap-2 md:gap-3 mb-2 md:mb-4">
+          <Scale size={20} className="md:w-7 md:h-7 text-primary" />
+          <p className="font-mono text-[10px] md:text-sm text-primary">UNIVERSAL DECLARATION OF HUMAN RIGHTS</p>
+          <BookOpen size={20} className="md:w-7 md:h-7 text-primary" />
         </div>
         
-        <div className="bg-card/95 backdrop-blur-sm rounded-lg p-8 neon-border-blue">
-          <h3 className="font-display text-xl text-primary mb-4">ARTICLE 14</h3>
-          <blockquote className="text-lg text-foreground leading-relaxed italic">
+        <div className="bg-card/95 backdrop-blur-sm rounded-lg p-4 md:p-8 neon-border-blue">
+          <h3 className="font-display text-lg md:text-xl text-primary mb-2 md:mb-4">ARTICLE 14</h3>
+          <blockquote className="text-sm md:text-lg text-foreground leading-relaxed italic">
             "Everyone has the right to seek and to enjoy in other countries asylum from persecution."
           </blockquote>
-          <p className="text-sm text-muted-foreground mt-4">
+          <p className="text-xs md:text-sm text-muted-foreground mt-2 md:mt-4">
             — United Nations, 1948
           </p>
         </div>
@@ -88,7 +88,7 @@ const HumanRightsLab: React.FC<HumanRightsLabProps> = ({ progress }) => {
       
       {/* Perspective Slider - Myth to Fact */}
       <div 
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl px-8"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl px-4 md:px-8 z-10"
         style={{ 
           opacity: progress > 0.3 ? 1 : 0,
           transform: `translate(-50%, -50%) scale(${0.9 + Math.min(0.1, (progress - 0.3) * 0.5)})`,
@@ -96,32 +96,32 @@ const HumanRightsLab: React.FC<HumanRightsLabProps> = ({ progress }) => {
       >
         <div className="relative bg-card/95 backdrop-blur-sm rounded-xl overflow-hidden border border-border">
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-border">
-            <div className="flex items-center gap-2">
-              <XCircle size={18} className="text-destructive" />
-              <span className="font-mono text-xs text-destructive">MYTH</span>
+          <div className="flex items-center justify-between p-2 md:p-4 border-b border-border">
+            <div className="flex items-center gap-1 md:gap-2">
+              <XCircle size={14} className="md:w-[18px] md:h-[18px] text-destructive" />
+              <span className="font-mono text-[10px] md:text-xs text-destructive">MYTH</span>
             </div>
-            <span className="font-mono text-xs text-muted-foreground">
+            <span className="font-mono text-[10px] md:text-xs text-muted-foreground">
               PERSPECTIVE SCANNER
             </span>
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-xs text-primary">FACT</span>
-              <CheckCircle size={18} className="text-primary" />
+            <div className="flex items-center gap-1 md:gap-2">
+              <span className="font-mono text-[10px] md:text-xs text-primary">FACT</span>
+              <CheckCircle size={14} className="md:w-[18px] md:h-[18px] text-primary" />
             </div>
           </div>
           
           {/* Content Area */}
-          <div className="relative p-8 min-h-[200px]">
+          <div className="relative p-4 md:p-8 min-h-[150px] md:min-h-[200px]">
             {/* Myth Layer */}
             <div 
-              className="absolute inset-8 flex items-center justify-center transition-opacity duration-300"
+              className="absolute inset-4 md:inset-8 flex items-center justify-center transition-opacity duration-300"
               style={{ opacity: showFact ? 0 : 1 }}
             >
-              <div className="text-center">
-                <p className="text-2xl font-display text-destructive text-glow-red">
+              <div className="text-center px-2">
+                <p className="text-lg md:text-2xl font-display text-destructive text-glow-red">
                   "{mythsAndFacts[activeMyth].myth}"
                 </p>
-                <p className="text-xs text-muted-foreground mt-4 font-mono">COMMON MISCONCEPTION</p>
+                <p className="text-[10px] md:text-xs text-muted-foreground mt-2 md:mt-4 font-mono">COMMON MISCONCEPTION</p>
               </div>
             </div>
             
@@ -147,15 +147,15 @@ const HumanRightsLab: React.FC<HumanRightsLabProps> = ({ progress }) => {
             
             {/* Fact Layer */}
             <div 
-              className="absolute inset-8 flex items-center justify-center transition-opacity duration-500"
+              className="absolute inset-4 md:inset-8 flex items-center justify-center transition-opacity duration-500"
               style={{ opacity: showFact ? 1 : 0 }}
             >
-              <div className="text-center">
-                <p className="text-2xl font-display text-primary text-glow-blue">
+              <div className="text-center px-2">
+                <p className="text-lg md:text-2xl font-display text-primary text-glow-blue">
                   "{mythsAndFacts[activeMyth].fact}"
                 </p>
-                <p className="text-xs text-primary mt-4 font-mono flex items-center justify-center gap-2">
-                  <CheckCircle size={14} />
+                <p className="text-[10px] md:text-xs text-primary mt-2 md:mt-4 font-mono flex items-center justify-center gap-2">
+                  <CheckCircle size={12} className="md:w-[14px] md:h-[14px]" />
                   VERIFIED FACT
                 </p>
               </div>
@@ -163,18 +163,18 @@ const HumanRightsLab: React.FC<HumanRightsLabProps> = ({ progress }) => {
           </div>
           
           {/* Progress Bar */}
-          <div className="p-4 border-t border-border">
+          <div className="p-2 md:p-4 border-t border-border">
             <div className="h-1 bg-secondary rounded-full overflow-hidden">
               <div 
                 className="h-full bg-gradient-to-r from-destructive via-neon-purple to-primary transition-all duration-100"
                 style={{ width: `${scanProgress}%` }}
               />
             </div>
-            <div className="flex justify-between mt-2">
-              <span className="text-xs text-muted-foreground font-mono">
+            <div className="flex justify-between mt-1 md:mt-2">
+              <span className="text-[10px] md:text-xs text-muted-foreground font-mono">
                 {scanProgress < 100 ? 'SCANNING...' : 'VERIFIED'}
               </span>
-              <span className="text-xs text-muted-foreground font-mono">
+              <span className="text-[10px] md:text-xs text-muted-foreground font-mono">
                 {activeMyth + 1}/{mythsAndFacts.length}
               </span>
             </div>
@@ -183,10 +183,10 @@ const HumanRightsLab: React.FC<HumanRightsLabProps> = ({ progress }) => {
       </div>
       
       {/* Level Label */}
-      <div className="absolute bottom-8 left-8 z-20">
+      <div className="absolute bottom-4 md:bottom-8 left-4 md:left-8 z-20 max-w-[calc(100%-2rem)] md:max-w-md">
         <p className="font-mono text-xs text-muted-foreground mb-1">LEVEL 04</p>
-        <h2 className="font-display text-2xl text-foreground text-glow-blue">THE HUMAN RIGHTS LAB</h2>
-        <p className="text-sm text-muted-foreground mt-2 max-w-md">
+        <h2 className="font-display text-lg md:text-2xl text-foreground text-glow-blue">THE HUMAN RIGHTS LAB</h2>
+        <p className="text-xs md:text-sm text-muted-foreground mt-1 md:mt-2">
           Transform myths into verified facts with the perspective scanner
         </p>
       </div>

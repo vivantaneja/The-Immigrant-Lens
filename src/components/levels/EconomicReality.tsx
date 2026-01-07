@@ -128,20 +128,20 @@ const EconomicReality: React.FC<EconomicRealityProps> = ({ progress, surveyData 
                 {/* Stat Overlay */}
                 {isActive && buildingProgress > 0.8 && (
                   <div 
-                    className="absolute -top-32 left-1/2 -translate-x-1/2 w-48 bg-card/95 backdrop-blur-sm rounded-lg p-4 neon-border-blue z-10"
+                    className="absolute -top-28 md:-top-32 left-1/2 -translate-x-1/2 w-40 md:w-48 bg-card/95 backdrop-blur-sm rounded-lg p-3 md:p-4 neon-border-blue z-10"
                     style={{
                       opacity: (buildingProgress - 0.8) * 5,
                       transform: `translateX(-50%) translateY(${(1 - (buildingProgress - 0.8) * 5) * 10}px)`,
                     }}
                   >
-                    <div className="flex items-center gap-2 mb-2">
-                      <Icon size={16} className="text-primary" />
-                      <p className="font-mono text-xs text-muted-foreground">{building.stat}</p>
+                    <div className="flex items-center gap-2 mb-1 md:mb-2">
+                      <Icon size={14} className="md:w-4 md:h-4 text-primary" />
+                      <p className="font-mono text-[10px] md:text-xs text-muted-foreground">{building.stat}</p>
                     </div>
-                    <p className="text-2xl font-display text-primary text-glow-blue font-bold">
+                    <p className="text-xl md:text-2xl font-display text-primary text-glow-blue font-bold">
                       {building.getValue(surveyData)}
                     </p>
-                    <p className="text-xs text-muted-foreground mt-1">{building.label}</p>
+                    <p className="text-[10px] md:text-xs text-muted-foreground mt-1">{building.label}</p>
                   </div>
                 )}
               </div>
@@ -162,10 +162,10 @@ const EconomicReality: React.FC<EconomicRealityProps> = ({ progress, surveyData 
       
       {/* Animated Bar Chart Overlay */}
       <div 
-        className="absolute top-8 right-8 bg-card/90 backdrop-blur-sm border border-border rounded-lg p-6 w-80"
+        className="absolute top-4 right-4 md:top-8 md:right-8 bg-card/90 backdrop-blur-sm border border-border rounded-lg p-3 md:p-6 w-[calc(100%-2rem)] md:w-80 max-w-sm"
         style={{ opacity: Math.min(1, progress * 1.5) }}
       >
-        <p className="font-mono text-xs text-muted-foreground mb-4">CONTRIBUTION METRICS</p>
+        <p className="font-mono text-[10px] md:text-xs text-muted-foreground mb-2 md:mb-4">CONTRIBUTION METRICS</p>
         
         {[
           { label: "GDP Growth", value: 75, delay: 0 },
@@ -173,12 +173,12 @@ const EconomicReality: React.FC<EconomicRealityProps> = ({ progress, surveyData 
           { label: "Innovation Index", value: 85, delay: 0.4 },
           { label: "Tax Revenue", value: 70, delay: 0.6 },
         ].map((metric, i) => (
-          <div key={i} className="mb-3">
-            <div className="flex justify-between text-xs mb-1">
+          <div key={i} className="mb-2 md:mb-3">
+            <div className="flex justify-between text-[10px] md:text-xs mb-1">
               <span className="text-muted-foreground">{metric.label}</span>
               <span className="text-primary font-mono">{metric.value}%</span>
             </div>
-            <div className="h-2 bg-secondary rounded-full overflow-hidden">
+            <div className="h-1.5 md:h-2 bg-secondary rounded-full overflow-hidden">
               <div
                 className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-1000 ease-out"
                 style={{
@@ -192,10 +192,10 @@ const EconomicReality: React.FC<EconomicRealityProps> = ({ progress, surveyData 
       </div>
       
       {/* Level Label */}
-      <div className="absolute bottom-8 left-8 z-20">
+      <div className="absolute bottom-4 md:bottom-8 left-4 md:left-8 z-20 max-w-[calc(100%-2rem)] md:max-w-md">
         <p className="font-mono text-xs text-muted-foreground mb-1">LEVEL 03</p>
-        <h2 className="font-display text-2xl text-foreground text-glow-blue">THE ECONOMIC REALITY</h2>
-        <p className="text-sm text-muted-foreground mt-2 max-w-md">
+        <h2 className="font-display text-lg md:text-2xl text-foreground text-glow-blue">THE ECONOMIC REALITY</h2>
+        <p className="text-xs md:text-sm text-muted-foreground mt-1 md:mt-2">
           Explore the city and discover the economic contributions of migrants
         </p>
       </div>

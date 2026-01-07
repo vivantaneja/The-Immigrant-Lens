@@ -3,6 +3,16 @@ import { Download, Share2, CheckCircle, Sparkles, FileText, Heart } from 'lucide
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
 
+// Helper function to get ordinal suffix (1st, 2nd, 3rd, etc.)
+const getOrdinalSuffix = (n: number): string => {
+  const j = n % 10;
+  const k = n % 100;
+  if (j === 1 && k !== 11) return 'st';
+  if (j === 2 && k !== 12) return 'nd';
+  if (j === 3 && k !== 13) return 'rd';
+  return 'th';
+};
+
 interface InformedCitizenProps {
   progress: number;
   surveyData: {
@@ -11,9 +21,11 @@ interface InformedCitizenProps {
     healthcareWorkforce: number;
     economicImpact: string;
   };
+  visitCount: number;
+  userVisitNumber: number;
 }
 
-const InformedCitizen: React.FC<InformedCitizenProps> = ({ progress, surveyData }) => {
+const InformedCitizen: React.FC<InformedCitizenProps> = ({ progress, surveyData, visitCount, userVisitNumber }) => {
   const [pledged, setPledged] = useState(false);
   const [particles, setParticles] = useState<Array<{ id: number; x: number; delay: number }>>([]);
   
@@ -90,21 +102,21 @@ const InformedCitizen: React.FC<InformedCitizenProps> = ({ progress, surveyData 
       
       {/* Scoreboard */}
       <div 
-        className="absolute top-12 left-1/2 -translate-x-1/2 w-full max-w-4xl px-8"
+        className="absolute top-8 md:top-12 left-1/2 -translate-x-1/2 w-full max-w-4xl px-4 md:px-8 overflow-y-auto max-h-[90vh] pb-20"
         style={{ 
           opacity: Math.min(1, progress * 2),
           transform: `translateX(-50%) translateY(${(1 - Math.min(1, progress * 2)) * 30}px)`,
         }}
       >
-        <div className="text-center mb-8">
-          <p className="font-mono text-sm text-primary mb-2">JOURNEY COMPLETE</p>
-          <h2 className="font-display text-4xl text-foreground text-glow-blue">
+        <div className="text-center mb-4 md:mb-8">
+          <p className="font-mono text-xs md:text-sm text-primary mb-1 md:mb-2">JOURNEY COMPLETE</p>
+          <h2 className="font-display text-2xl md:text-4xl text-foreground text-glow-blue">
             YOU ARE NOW INFORMED
           </h2>
         </div>
         
         {/* Facts Summary Grid */}
-        <div className="grid grid-cols-2 gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-4 md:mb-8">
           {factsDiscovered.map((fact, index) => {
             const Icon = fact.icon;
             return (
@@ -132,21 +144,21 @@ const InformedCitizen: React.FC<InformedCitizenProps> = ({ progress, surveyData 
         
         {/* Action Buttons */}
         <div 
-          className="flex justify-center gap-6"
+          className="flex flex-col sm:flex-row justify-center gap-3 md:gap-6"
           style={{ opacity: progress > 0.6 ? 1 : 0 }}
         >
           <Button
             onClick={handleDownload}
-            className="bg-secondary hover:bg-secondary/80 text-foreground gap-2 px-6 py-6 text-lg"
+            className="bg-secondary hover:bg-secondary/80 text-foreground gap-2 px-4 md:px-6 py-4 md:py-6 text-sm md:text-lg w-full sm:w-auto"
           >
-            <Download size={20} />
+            <Download size={18} className="md:w-5 md:h-5" />
             Download Fact-Sheet
           </Button>
           
           <Button
             onClick={handlePledge}
             disabled={pledged}
-            className={`gap-2 px-6 py-6 text-lg transition-all duration-500 ${
+            className={`gap-2 px-4 md:px-6 py-4 md:py-6 text-sm md:text-lg transition-all duration-500 w-full sm:w-auto ${
               pledged 
                 ? 'bg-primary/50 text-primary-foreground' 
                 : 'bg-primary hover:bg-primary/90 text-primary-foreground box-glow-blue'
@@ -154,16 +166,31 @@ const InformedCitizen: React.FC<InformedCitizenProps> = ({ progress, surveyData 
           >
             {pledged ? (
               <>
-                <CheckCircle size={20} />
+                <CheckCircle size={18} className="md:w-5 md:h-5" />
                 Pledge Recorded
               </>
             ) : (
               <>
-                <Share2 size={20} />
+                <Share2 size={18} className="md:w-5 md:h-5" />
                 Pledge to Share Truth
               </>
             )}
           </Button>
+        </div>
+        
+        {/* Visit Counter */}
+        <div 
+          className="mt-4 md:mt-8 text-center"
+          style={{ opacity: progress > 0.7 ? 1 : 0 }}
+        >
+          <div className="inline-block bg-card/90 backdrop-blur-sm rounded-lg px-4 md:px-6 py-3 md:py-4 border border-border max-w-full mx-4">
+            <p className="font-display text-lg md:text-2xl text-foreground text-glow-blue mb-1 md:mb-2">
+              You are the {userVisitNumber.toLocaleString()}{getOrdinalSuffix(userVisitNumber)} visitor!
+            </p>
+            <p className="text-xs md:text-sm text-muted-foreground">
+              Share to reach more
+            </p>
+          </div>
         </div>
         
         {/* Pledge Success Message */}
@@ -182,10 +209,10 @@ const InformedCitizen: React.FC<InformedCitizenProps> = ({ progress, surveyData 
       </div>
       
       {/* Level Label */}
-      <div className="absolute bottom-8 left-8 z-20">
+      <div className="absolute bottom-4 md:bottom-8 left-4 md:left-8 z-20 max-w-[calc(100%-2rem)] md:max-w-md">
         <p className="font-mono text-xs text-muted-foreground mb-1">LEVEL 05</p>
-        <h2 className="font-display text-2xl text-foreground text-glow-blue">THE INFORMED CITIZEN</h2>
-        <p className="text-sm text-muted-foreground mt-2 max-w-md">
+        <h2 className="font-display text-lg md:text-2xl text-foreground text-glow-blue">THE INFORMED CITIZEN</h2>
+        <p className="text-xs md:text-sm text-muted-foreground mt-1 md:mt-2">
           Review your discoveries and pledge to share verified information
         </p>
       </div>
