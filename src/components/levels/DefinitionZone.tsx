@@ -50,7 +50,7 @@ const DefinitionZone: React.FC<DefinitionZoneProps> = ({ progress, surveyData })
       </div>
       
       {/* Data Terminals */}
-      <div className="absolute inset-0 flex items-center justify-center gap-8 px-16">
+      <div className="absolute inset-0 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 px-4 md:px-16 overflow-y-auto py-20 md:py-0">
         {definitions.map((def, index) => {
           const terminalProgress = Math.max(0, Math.min(1, (progress - index * 0.25) * 2));
           const isActive = terminalProgress > 0.3;
@@ -59,7 +59,7 @@ const DefinitionZone: React.FC<DefinitionZoneProps> = ({ progress, surveyData })
           return (
             <div
               key={def.term}
-              className={`relative bg-card/80 backdrop-blur-sm rounded-lg p-6 w-80 transition-all duration-700 ${
+              className={`relative bg-card/80 backdrop-blur-sm rounded-lg p-4 md:p-6 w-full max-w-sm md:w-80 transition-all duration-700 ${
                 isActive ? 'neon-border-blue' : 'border border-border/50'
               }`}
               style={{
@@ -118,21 +118,21 @@ const DefinitionZone: React.FC<DefinitionZoneProps> = ({ progress, surveyData })
       
       {/* Knowledge Gap Stat */}
       <div 
-        className="absolute bottom-24 left-1/2 -translate-x-1/2"
+        className="absolute bottom-20 md:bottom-24 left-1/2 -translate-x-1/2 w-full px-4"
         style={{ opacity: Math.min(1, progress * 2) }}
       >
-        <div className="bg-card/90 backdrop-blur-sm border border-border rounded-lg p-6 text-center">
+        <div className="bg-card/90 backdrop-blur-sm border border-border rounded-lg p-4 md:p-6 text-center max-w-md mx-auto">
           <p className="font-mono text-xs text-muted-foreground mb-2">COMPARISON DATA</p>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4 md:gap-6 justify-center">
             <div>
-              <p className="text-3xl font-display text-destructive text-glow-red font-bold">
+              <p className="text-2xl md:text-3xl font-display text-destructive text-glow-red font-bold">
                 {surveyData.knowledgeGap}%
               </p>
               <p className="text-xs text-muted-foreground mt-1">Couldn't distinguish<br/>these terms</p>
             </div>
-            <div className="w-px h-12 bg-border" />
+            <div className="w-px h-10 md:h-12 bg-border" />
             <div>
-              <p className="text-3xl font-display text-primary text-glow-blue font-bold">
+              <p className="text-2xl md:text-3xl font-display text-primary text-glow-blue font-bold">
                 {100 - surveyData.knowledgeGap}%
               </p>
               <p className="text-xs text-muted-foreground mt-1">Correctly identified<br/>differences</p>
@@ -142,10 +142,10 @@ const DefinitionZone: React.FC<DefinitionZoneProps> = ({ progress, surveyData })
       </div>
       
       {/* Level Label */}
-      <div className="absolute bottom-8 left-8 z-20">
+      <div className="absolute bottom-4 md:bottom-8 left-4 md:left-8 z-20 max-w-[calc(100%-2rem)] md:max-w-md">
         <p className="font-mono text-xs text-muted-foreground mb-1">LEVEL 02</p>
-        <h2 className="font-display text-2xl text-foreground text-glow-blue">THE DEFINITION ZONE</h2>
-        <p className="text-sm text-muted-foreground mt-2 max-w-md">
+        <h2 className="font-display text-lg md:text-2xl text-foreground text-glow-blue">THE DEFINITION ZONE</h2>
+        <p className="text-xs md:text-sm text-muted-foreground mt-1 md:mt-2">
           Access the data terminals to learn the legal distinctions between migration terms
         </p>
       </div>
