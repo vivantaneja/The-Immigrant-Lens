@@ -53,8 +53,6 @@ const headlines = [
 
 const InformationStorm: React.FC<InformationStormProps> = ({ progress, surveyData }) => {
   const stormOpacity = Math.max(0, 1 - progress * 2);
-  const beaconOpacity = Math.min(1, progress * 2);
-  const beaconScale = 0.5 + progress * 0.5;
   
   return (
     <div className="relative w-full h-full overflow-hidden">
@@ -121,47 +119,12 @@ const InformationStorm: React.FC<InformationStormProps> = ({ progress, surveyDat
         </div>
       </div>
       
-      {/* Beacon of Truth */}
-      <div 
-        className="absolute right-[5%] md:right-[15%] top-1/2 -translate-y-1/2 scale-75 md:scale-100"
-        style={{ 
-          opacity: beaconOpacity,
-          transform: `translateY(-50%) scale(${beaconScale * 0.75})`,
-        }}
-      >
-        <div className="relative">
-          {/* Beacon Glow */}
-          <div className="absolute inset-0 w-24 md:w-32 h-24 md:h-32 rounded-full bg-primary/20 animate-beacon blur-xl" />
-          
-          {/* Beacon Core */}
-          <div className="relative w-24 md:w-32 h-24 md:h-32 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center animate-beacon neon-border-blue">
-            <div className="text-center">
-              <div className="font-display text-primary-foreground text-xs md:text-sm font-bold">TRUTH</div>
-              <div className="font-display text-primary-foreground text-[10px] md:text-xs">BEACON</div>
-            </div>
-          </div>
-          
-          {/* Light Rays */}
-          {[...Array(8)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute top-1/2 left-1/2 w-1 h-16 md:h-24 bg-gradient-to-t from-primary/40 to-transparent"
-              style={{
-                transform: `translate(-50%, -100%) rotate(${i * 45}deg)`,
-                transformOrigin: 'bottom center',
-                opacity: beaconOpacity * 0.6,
-              }}
-            />
-          ))}
-        </div>
-      </div>
-      
       {/* Level Label */}
       <div className="absolute bottom-4 md:bottom-8 left-4 md:left-8 z-20 max-w-[calc(100%-2rem)] md:max-w-md">
         <p className="font-mono text-xs text-muted-foreground mb-1">LEVEL 01</p>
         <h2 className="font-display text-lg md:text-2xl text-foreground text-glow-blue">THE INFORMATION STORM</h2>
         <p className="text-xs md:text-sm text-muted-foreground mt-1 md:mt-2">
-          Navigate through the chaos of misinformation to find the beacon of truth
+          Navigate through the chaos of misinformation
         </p>
       </div>
     </div>

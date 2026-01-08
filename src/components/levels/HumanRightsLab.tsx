@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Scale, BookOpen, CheckCircle, XCircle } from 'lucide-react';
+import { CheckCircle, XCircle } from 'lucide-react';
 
 interface HumanRightsLabProps {
   progress: number;
@@ -60,31 +60,6 @@ const HumanRightsLab: React.FC<HumanRightsLabProps> = ({ progress }) => {
           )`,
         }}
       />
-      
-      {/* Article 14 Display */}
-      <div 
-        className="absolute top-8 md:top-12 left-1/2 -translate-x-1/2 text-center max-w-3xl px-4 md:px-8 z-30"
-        style={{ 
-          opacity: Math.min(1, progress * 2),
-          transform: `translateX(-50%) translateY(${(1 - Math.min(1, progress * 2)) * 20}px)`,
-        }}
-      >
-        <div className="flex items-center justify-center gap-2 md:gap-3 mb-2 md:mb-4">
-          <Scale size={20} className="md:w-7 md:h-7 text-primary" />
-          <p className="font-mono text-[10px] md:text-sm text-primary">UNIVERSAL DECLARATION OF HUMAN RIGHTS</p>
-          <BookOpen size={20} className="md:w-7 md:h-7 text-primary" />
-        </div>
-        
-        <div className="bg-card/95 backdrop-blur-sm rounded-lg p-4 md:p-8 neon-border-blue">
-          <h3 className="font-display text-lg md:text-xl text-primary mb-2 md:mb-4">ARTICLE 14</h3>
-          <blockquote className="text-sm md:text-lg text-foreground leading-relaxed italic">
-            "Everyone has the right to seek and to enjoy in other countries asylum from persecution."
-          </blockquote>
-          <p className="text-xs md:text-sm text-muted-foreground mt-2 md:mt-4">
-            — United Nations, 1948
-          </p>
-        </div>
-      </div>
       
       {/* Perspective Slider - Myth to Fact */}
       <div 

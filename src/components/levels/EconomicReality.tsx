@@ -160,37 +160,6 @@ const EconomicReality: React.FC<EconomicRealityProps> = ({ progress, surveyData 
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
       </div>
       
-      {/* Animated Bar Chart Overlay */}
-      <div 
-        className="absolute top-4 right-4 md:top-8 md:right-8 bg-card/90 backdrop-blur-sm border border-border rounded-lg p-3 md:p-6 w-[calc(100%-2rem)] md:w-80 max-w-sm"
-        style={{ opacity: Math.min(1, progress * 1.5) }}
-      >
-        <p className="font-mono text-[10px] md:text-xs text-muted-foreground mb-2 md:mb-4">CONTRIBUTION METRICS</p>
-        
-        {[
-          { label: "GDP Growth", value: 75, delay: 0 },
-          { label: "Job Creation", value: 65, delay: 0.2 },
-          { label: "Innovation Index", value: 85, delay: 0.4 },
-          { label: "Tax Revenue", value: 70, delay: 0.6 },
-        ].map((metric, i) => (
-          <div key={i} className="mb-2 md:mb-3">
-            <div className="flex justify-between text-[10px] md:text-xs mb-1">
-              <span className="text-muted-foreground">{metric.label}</span>
-              <span className="text-primary font-mono">{metric.value}%</span>
-            </div>
-            <div className="h-1.5 md:h-2 bg-secondary rounded-full overflow-hidden">
-              <div
-                className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-1000 ease-out"
-                style={{
-                  width: `${Math.min(metric.value, progress * 100 * (1 + metric.delay))}%`,
-                  boxShadow: '0 0 10px hsl(190 100% 50% / 0.5)',
-                }}
-              />
-            </div>
-          </div>
-        ))}
-      </div>
-      
       {/* Level Label */}
       <div className="absolute bottom-4 md:bottom-8 left-4 md:left-8 z-20 max-w-[calc(100%-2rem)] md:max-w-md">
         <p className="font-mono text-xs text-muted-foreground mb-1">LEVEL 03</p>

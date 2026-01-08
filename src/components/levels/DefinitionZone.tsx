@@ -116,31 +116,6 @@ const DefinitionZone: React.FC<DefinitionZoneProps> = ({ progress, surveyData })
         })}
       </div>
       
-      {/* Knowledge Gap Stat */}
-      <div 
-        className="absolute bottom-20 md:bottom-24 left-1/2 -translate-x-1/2 w-full px-4"
-        style={{ opacity: Math.min(1, progress * 2) }}
-      >
-        <div className="bg-card/90 backdrop-blur-sm border border-border rounded-lg p-4 md:p-6 text-center max-w-md mx-auto">
-          <p className="font-mono text-xs text-muted-foreground mb-2">COMPARISON DATA</p>
-          <div className="flex items-center gap-4 md:gap-6 justify-center">
-            <div>
-              <p className="text-2xl md:text-3xl font-display text-destructive text-glow-red font-bold">
-                {surveyData.knowledgeGap}%
-              </p>
-              <p className="text-xs text-muted-foreground mt-1">Couldn't distinguish<br/>these terms</p>
-            </div>
-            <div className="w-px h-10 md:h-12 bg-border" />
-            <div>
-              <p className="text-2xl md:text-3xl font-display text-primary text-glow-blue font-bold">
-                {100 - surveyData.knowledgeGap}%
-              </p>
-              <p className="text-xs text-muted-foreground mt-1">Correctly identified<br/>differences</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      
       {/* Level Label */}
       <div className="absolute bottom-4 md:bottom-8 left-4 md:left-8 z-20 max-w-[calc(100%-2rem)] md:max-w-md">
         <p className="font-mono text-xs text-muted-foreground mb-1">LEVEL 02</p>
