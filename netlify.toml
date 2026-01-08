@@ -1,4 +1,8 @@
 [build]
   functions = "netlify/functions"
   publish = "dist"
+  edge_functions = "netlify/edge-functions"
 
+[[edge_functions]]
+  path = "/.netlify/functions/increment-visits"
+  function = "increment-visits"
