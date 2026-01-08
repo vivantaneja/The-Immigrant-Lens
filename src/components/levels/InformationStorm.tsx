@@ -52,7 +52,8 @@ const headlines = [
 ];
 
 const InformationStorm: React.FC<InformationStormProps> = ({ progress, surveyData }) => {
-  const stormOpacity = Math.max(0, 1 - progress * 2);
+  // Keep background elements visible - red text should always be visible in background
+  const stormOpacity = Math.max(0.6, 1 - progress * 0.2);
   
   return (
     <div className="relative w-full h-full overflow-hidden">
@@ -96,27 +97,6 @@ const InformationStorm: React.FC<InformationStormProps> = ({ progress, surveyDat
             {headline.text}
           </div>
         ))}
-      </div>
-      
-      {/* Survey Stat Card */}
-      <div 
-        className="absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 z-10 w-full px-4"
-        style={{ 
-          opacity: stormOpacity > 0.5 ? 1 : stormOpacity * 2,
-          transform: `translate(-50%, -50%) scale(${0.8 + stormOpacity * 0.2})`,
-        }}
-      >
-        <div className="bg-card/90 backdrop-blur-sm border border-border rounded-lg p-4 md:p-6 max-w-md mx-auto neon-border-red">
-          <p className="text-xs md:text-sm text-muted-foreground mb-2 font-mono">SURVEY FINDING</p>
-          <p className="text-xl md:text-2xl font-display text-foreground">
-            <span className="text-destructive text-glow-red text-2xl md:text-4xl font-bold">
-              {surveyData.knowledgeGap}%
-            </span>
-          </p>
-          <p className="text-sm md:text-lg text-foreground mt-2">
-            of people admit they don't fully understand migration policies
-          </p>
-        </div>
       </div>
       
       {/* Level Label */}
