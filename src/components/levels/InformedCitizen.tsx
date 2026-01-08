@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { Download, Share2, CheckCircle, Sparkles, FileText, Heart } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { toast } from '@/hooks/use-toast';
+import { CheckCircle, Sparkles, FileText, Heart } from 'lucide-react';
 
 // Helper function to get ordinal suffix (1st, 2nd, 3rd, etc.)
 const getOrdinalSuffix = (n: number): string => {
@@ -26,41 +24,12 @@ interface InformedCitizenProps {
 }
 
 const InformedCitizen: React.FC<InformedCitizenProps> = ({ progress, surveyData, visitCount, userVisitNumber }) => {
-  const [pledged, setPledged] = useState(false);
-  const [particles, setParticles] = useState<Array<{ id: number; x: number; delay: number }>>([]);
-  
   const factsDiscovered = [
     { icon: Sparkles, text: `${surveyData.socialMediaReliance}% rely on social media for migration news`, category: "Media Literacy" },
     { icon: FileText, text: "Legal distinctions between Migrant, Refugee, and Asylum Seeker", category: "Definitions" },
     { icon: CheckCircle, text: `Migrants contribute ${surveyData.economicImpact} to the economy`, category: "Economics" },
     { icon: Heart, text: "Article 14: The right to seek asylum is universal", category: "Human Rights" },
   ];
-  
-  const handlePledge = () => {
-    setPledged(true);
-    
-    // Create upload particles animation
-    const newParticles = [...Array(20)].map((_, i) => ({
-      id: Date.now() + i,
-      x: 30 + Math.random() * 40,
-      delay: Math.random() * 0.5,
-    }));
-    setParticles(newParticles);
-    
-    toast({
-      title: "Thank you for your pledge!",
-      description: "Together, we can combat misinformation about migration.",
-    });
-    
-    setTimeout(() => setParticles([]), 2000);
-  };
-  
-  const handleDownload = () => {
-    toast({
-      title: "Fact Sheet Ready",
-      description: "Your fact sheet is being prepared for download.",
-    });
-  };
   
   return (
     <div className="relative w-full h-full overflow-hidden">
@@ -85,20 +54,6 @@ const InformedCitizen: React.FC<InformedCitizenProps> = ({ progress, surveyData,
           />
         ))}
       </div>
-      
-      {/* Upload Particles Animation */}
-      {particles.map(particle => (
-        <div
-          key={particle.id}
-          className="absolute w-3 h-3 bg-primary rounded-full"
-          style={{
-            left: `${particle.x}%`,
-            bottom: '30%',
-            animation: `upload-particles 1s ease-out forwards`,
-            animationDelay: `${particle.delay}s`,
-          }}
-        />
-      ))}
       
       {/* Scoreboard */}
       <div 
@@ -142,46 +97,10 @@ const InformedCitizen: React.FC<InformedCitizenProps> = ({ progress, surveyData,
           })}
         </div>
         
-        {/* Action Buttons */}
+        {/* Visit Counter */}
         <div 
           className="flex flex-col sm:flex-row justify-center gap-3 md:gap-6"
           style={{ opacity: progress > 0.6 ? 1 : 0 }}
-        >
-          <Button
-            onClick={handleDownload}
-            className="bg-secondary hover:bg-secondary/80 text-foreground gap-2 px-4 md:px-6 py-4 md:py-6 text-sm md:text-lg w-full sm:w-auto"
-          >
-            <Download size={18} className="md:w-5 md:h-5" />
-            Download Fact-Sheet
-          </Button>
-          
-          <Button
-            onClick={handlePledge}
-            disabled={pledged}
-            className={`gap-2 px-4 md:px-6 py-4 md:py-6 text-sm md:text-lg transition-all duration-500 w-full sm:w-auto ${
-              pledged 
-                ? 'bg-primary/50 text-primary-foreground' 
-                : 'bg-primary hover:bg-primary/90 text-primary-foreground box-glow-blue'
-            }`}
-          >
-            {pledged ? (
-              <>
-                <CheckCircle size={18} className="md:w-5 md:h-5" />
-                Pledge Recorded
-              </>
-            ) : (
-              <>
-                <Share2 size={18} className="md:w-5 md:h-5" />
-                Pledge to Share Truth
-              </>
-            )}
-          </Button>
-        </div>
-        
-        {/* Visit Counter */}
-        <div 
-          className="mt-4 md:mt-8 text-center"
-          style={{ opacity: progress > 0.7 ? 1 : 0 }}
         >
           <div className="inline-block bg-card/90 backdrop-blur-sm rounded-lg px-4 md:px-6 py-3 md:py-4 border border-border max-w-full mx-4">
             <p className="font-display text-lg md:text-2xl text-foreground text-glow-blue mb-1 md:mb-2">
@@ -192,20 +111,6 @@ const InformedCitizen: React.FC<InformedCitizenProps> = ({ progress, surveyData,
             </p>
           </div>
         </div>
-        
-        {/* Pledge Success Message */}
-        {pledged && (
-          <div className="mt-8 text-center animate-fade-in">
-            <div className="inline-block bg-primary/10 rounded-lg px-6 py-4 neon-border-blue">
-              <p className="text-primary font-display text-lg">
-                🌍 Thank you for joining the movement against misinformation
-              </p>
-              <p className="text-sm text-muted-foreground mt-2">
-                Share what you've learned with others
-              </p>
-            </div>
-          </div>
-        )}
       </div>
       
       {/* Level Label */}

@@ -32,37 +32,72 @@ const Index = () => {
   const [userVisitNumber, setUserVisitNumber] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   
-  // Visit counter - increments on each page load and fetches live count
+  // Visit counter - increments on each page load/refresh and shows live count
   useEffect(() => {
-    // Always increment on page load to count all visits
-    fetch('/.netlify/functions/increment-visits', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(res => res.json())
-      .then(data => {
-        const newCount = data.count || 200;
+    const incrementVisit = async () => {
+      // Fallback to localStorage for local development
+      const useLocalStorage = () => {
+        try {
+          const stored = localStorage.getItem('visitCount');
+          const currentCount = stored ? parseInt(stored, 10) : 0;
+          if (isNaN(currentCount)) {
+            localStorage.setItem('visitCount', '0');
+            setVisitCount(0);
+            setUserVisitNumber(0);
+            return;
+          }
+          const newCount = currentCount + 1;
+          localStorage.setItem('visitCount', newCount.toString());
+          console.log('Visit count (localStorage):', currentCount, '->', newCount);
+          setVisitCount(newCount);
+          setUserVisitNumber(newCount);
+        } catch (e) {
+          console.error('localStorage error:', e);
+          setVisitCount(0);
+          setUserVisitNumber(0);
+        }
+      };
+
+      try {
+        // Add cache-busting timestamp to ensure fresh request on every refresh
+        const timestamp = Date.now();
+        const url = `/.netlify/functions/increment-visits?_t=${timestamp}`;
+        
+        console.log('Attempting to increment visit count via API...');
+        
+        // POST increments the count and returns the new value
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+          },
+          cache: 'no-store',
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: Failed to increment visit count`);
+        }
+        
+        const data = await response.json();
+        const newCount = data.count ?? 0;
+        
+        console.log('Visit count incremented to:', newCount);
+        
+        // Update with the new incremented count
         setVisitCount(newCount);
         setUserVisitNumber(newCount);
-      })
-      .catch((error) => {
-        console.error('Error incrementing visit count:', error);
-        // On error, try to fetch current count
-        fetch('/.netlify/functions/increment-visits')
-          .then(res => res.json())
-          .then(data => {
-            const count = data.count || 200;
-            setVisitCount(count);
-            setUserVisitNumber(count);
-          })
-          .catch(() => {
-            // Fallback to default if server is unavailable
-            setVisitCount(200);
-            setUserVisitNumber(200);
-          });
-      });
+      } catch (error) {
+        console.warn('API call failed, using localStorage fallback:', error);
+        
+        // Fallback to localStorage for local dev
+        useLocalStorage();
+      }
+    };
+    
+    // Increment on every page load/refresh
+    incrementVisit();
   }, []);
   
   // Use ref to track current level for navigation callbacks

@@ -3,7 +3,7 @@
 const https = require('https');
 const { URL } = require('url');
 
-const DEFAULT_COUNT = 200;
+const DEFAULT_COUNT = 0;
 
 // For production: Set these environment variables in Netlify dashboard:
 // - STORAGE_API_URL: Your storage API URL (optional, defaults to JSONBin.io)
@@ -64,7 +64,7 @@ async function readCount() {
   // First, try environment variable (can be set manually in Netlify dashboard)
   if (process.env.VISIT_COUNT) {
     const envCount = parseInt(process.env.VISIT_COUNT, 10);
-    if (!isNaN(envCount) && envCount >= DEFAULT_COUNT) {
+    if (!isNaN(envCount) && envCount >= 0) {
       return envCount;
     }
   }
@@ -81,7 +81,7 @@ async function readCount() {
       if (response.ok) {
         const data = await response.json();
         const count = parseInt(data.record?.count || DEFAULT_COUNT, 10);
-        if (!isNaN(count) && count >= DEFAULT_COUNT) {
+        if (!isNaN(count) && count >= 0) {
           return count;
         }
       }
@@ -165,13 +165,19 @@ exports.handler = async (event) => {
     try {
       let currentCount = await readCount();
       
-      // Ensure count is at least 200
-      if (currentCount < DEFAULT_COUNT) {
-        currentCount = DEFAULT_COUNT;
+      // Ensure count is a valid number, default to 0 if not
+      if (currentCount === null || currentCount === undefined || isNaN(currentCount) || currentCount < 0) {
+        currentCount = 0;
       }
       
-      const newCount = currentCount + 1;
+      // Always increment by 1
+      const newCount = Number(currentCount) + 1;
+      
+      // Save the new count
       await writeCount(newCount);
+      
+      // Update memory storage as well for consistency
+      memoryStorage.count = newCount;
       
       return {
         statusCode: 200,
@@ -183,15 +189,27 @@ exports.handler = async (event) => {
       };
     } catch (error) {
       console.error('Error incrementing count:', error);
-      // Return error but don't fail completely
-      return {
-        statusCode: 200,
-        headers,
-        body: JSON.stringify({ 
-          count: DEFAULT_COUNT,
-          error: "Failed to increment count" 
-        }),
-      };
+      // Try to return current count if available
+      try {
+        const currentCount = await readCount();
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({ 
+            count: currentCount || 0,
+            error: "Failed to increment count" 
+          }),
+        };
+      } catch (e) {
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({ 
+            count: 0,
+            error: "Failed to increment count" 
+          }),
+        };
+      }
     }
   }
 
